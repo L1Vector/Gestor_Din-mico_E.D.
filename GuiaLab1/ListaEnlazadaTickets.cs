@@ -13,79 +13,111 @@ namespace GuiaLab1
             // Inicializa la lista enlazada con la cabeza en null
             cabeza = null;
         }
-        public void insertarNodo(Nodo nuevo)
+        public bool insertarNodo(Nodo nuevo)
         {
+            // Nodo temporal creado para evitar duplicados
+            Nodo duplicado = cabeza;
+
             // Si la lista está vacía, el nuevo nodo se convierte en la cabeza y el último nodo
             if (cabeza == null)
             {
                 cabeza = nuevo;
                 cabeza.Referencia = null;
                 ultimo = cabeza;
+                return true;
             }
             // Si la lista no está vacía, se agrega el nuevo nodo al final
             else
             {
-                ultimo.Referencia = nuevo;
-                nuevo.Referencia = null;
-                ultimo = nuevo;
-            }
-        }
-        public string mostrarLista()
-        {
-            // Variable que almacena la información de la lista enlazada
-            string vA = "";
-            temp = cabeza;
-            while (temp != null)
-            {
-                // Agrega la información del nodo actual a la variable vA y avanza al siguiente nodo
-                vA += temp.ToString() + Environment.NewLine;
-                temp = temp.Referencia;
-            }
-            return vA;
-        }
-        public void buscarNodo(string codigo)
-        {
-            temp = cabeza;
-            while (temp != null)
-            {
-                // Si se encuentra el nodo con el código especificado, se muestra su información
-                if (temp.ToString().Contains(codigo))
+                while (duplicado != null)
                 {
-                    Console.WriteLine("Nodo encontrado: " + temp.ToString());
-                    return;
-                }
-                temp = temp.Referencia;
-            }
-            // Si no se encuentra el nodo, se muestra un mensaje indicando que no se encontró
-            MessageBox.Show("Nodo no encontrado");
-        }
-        public void eliminarNodo(string codigo)
-        {
-            temp = cabeza;
-            Nodo anterior = null;
-            while (temp != null)
-            {
-                if (temp.ToString().Contains(codigo))
-                {
-                    if (anterior == null)
+                    if (duplicado.Codigo == nuevo.Codigo)
                     {
-                        cabeza = temp.Referencia;
+                        nuevo = null;
+                        return false;
                     }
                     else
                     {
-                        anterior.Referencia = temp.Referencia;
+                        duplicado = duplicado.Referencia;
                     }
-                    if (temp == ultimo)
-                    {
-                        ultimo = anterior;
-                    }
-                    Console.WriteLine("Nodo eliminado: " + temp.ToString());
-                    return;
                 }
-                anterior = temp;
-                temp = temp.Referencia;
+
+                ultimo.Referencia = nuevo;
+                nuevo.Referencia = null;
+                ultimo = nuevo;
+                return true;
             }
-            Console.WriteLine("Nodo no encontrado");
+        }
+        public bool mostrarLista(ListBox lista)
+        {
+            // Nodo temporal para recorrer la lista enlazada
+            // Variable que almacena la información de la lista enlazada
+            Nodo actual = cabeza;
+            if (actual != null)
+            {
+                while (actual != null)
+                {
+                    // Agrega el nodo directamente al ListBox
+                    lista.Items.Add(actual);
+                    actual = actual.Referencia;
+                }
+                return true;
+            }
+            return false;
+        }
+        public bool buscarNodo(string codigo)
+        {
+            // Variable temporal para recorrer la lista enlazada
+            Nodo busca = cabeza;
+            if (busca != null)
+            {
+                // Recorre la lista enlazada hasta encontrar el nodo con el código especificado o hasta llegar al final de la lista
+                while (busca != null)
+                {
+                    if (busca.Codigo == codigo) return true;
+                    else busca = busca.Referencia;
+                }
+            }
+            return false;
+        }
+        public bool eliminarNodo(string codigo)
+        {
+            Nodo temp = cabeza;
+            Nodo anterior = null;
+
+            if (cabeza != null)
+            {
+                while (temp != null)
+                {
+                    if (temp.Codigo == codigo)
+                    {
+                        if (temp == cabeza)
+                        {
+                            // El nodo a eliminar es la cabeza
+                            cabeza = cabeza.Referencia;
+                        }
+                        else if (temp == ultimo)
+                        {
+                            // El nodo a eliminar es el último nodo
+                            anterior.Referencia = null;
+                            ultimo = anterior;
+                        }
+                        else
+                        {
+                            // El nodo a eliminar está en el medio de la lista
+                            anterior.Referencia = temp.Referencia;
+                        }
+                        return true;
+                    }
+                    anterior = temp;
+                    temp = temp.Referencia;
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

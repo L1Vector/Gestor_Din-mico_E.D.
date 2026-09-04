@@ -11,6 +11,7 @@ namespace GuiaLab1
         private string descripcion;
         private string prioridad;
         private Nodo referencia;
+
         public Nodo(string Codigo, string Descripcion, string Prioridad)
         {
             this.codigo = Codigo;
@@ -18,17 +19,18 @@ namespace GuiaLab1
             this.prioridad = Prioridad;
             this.referencia = null;
         }
+        public string Codigo { get => codigo; set => codigo = value; }
+        public string Descripcion { get => descripcion; set => descripcion = value; }
+        public string Prioridad { get => prioridad; set => prioridad = value; }
+
         // Este comando permite obtener y establecer el valor del dato del nodo
         internal Nodo Referencia { get => referencia; set => referencia = value; }
 
         // Este comando reescribe el método ToString para devolver el valor del dato del nodo como una cadena
         public override string ToString()
         {
-            string a = codigo.ToString();
-            string b = descripcion.ToString();
-            string c = prioridad.ToString();
-            string d = referencia.ToString();
-            return a + " - " + b + " - " + c + " - " + d;
+
+            return $"{codigo} - {prioridad} - {descripcion}";
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GuiaLab1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4667c19d36fd941e5c45371c5570545719ac9f42")]
 [assembly: System.Reflection.AssemblyProductAttribute("GuiaLab1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GuiaLab1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
